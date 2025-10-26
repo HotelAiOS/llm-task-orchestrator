@@ -1,0 +1,20 @@
+services:
+  perplexica:
+    build: 
+      context: ./perplexica-source
+      dockerfile: Dockerfile
+    container_name: perplexica-main
+    ports:
+      - "3001:3000"
+    environment:
+      - OLLAMA_API_URL=http://host.docker.internal:11434
+      - NODE_ENV=production
+    volumes:
+      - ./perplexica-data:/app/data
+    networks:
+      - perplexica-network
+    restart: unless-stopped
+
+networks:
+  perplexica-network:
+    driver: bridge
